@@ -1,0 +1,27 @@
+
+# import git tools
+source ~/.git-prompt.sh
+source ~/.git-completion.bash
+
+# allow client coloring and set colors
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+
+# add interactive brokers library
+export PYTHONPATH="${PYTHONPATH}:/Users/Eric/IBJts/source/pythonclient"
+
+# turn on git dirtystate access for ps1
+GIT_PS1_SHOWDIRTYSTATE=1
+
+# command prompt
+#export PS1='\[\e[0;32m\]\nbash \[\e[1;31m\]\t \[\e[1;35m\]\w \[\e[1;33m\]$: \[\e[0m\]\n    '
+
+# allow vi commands to be used in bash line
+set -o vi
+
+# PROMPT WITH GIT
+export PS1='\[\e[0;32m\]\nbash \[\e[1;31m\]\t \[\e[1;35m\]\w \[\e[1;34m\]$(__git_ps1) \[\e[1;33m\]$: \[\e[0m\]\n    '
+
+
+# added by Anaconda3 5.1.0 installer
+#export PATH="/anaconda3/bin:$PATH"

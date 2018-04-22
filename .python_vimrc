@@ -1,0 +1,119 @@
+set nocompatible              " required
+filetype off                  " required
+
+" allow insert mode escape with 'kj'
+imap kj <Esc>
+
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
+Plugin 'tmhedberg/SimpylFold' " Folder
+Plugin 'vim-scripts/indentpython.vim' " Auto Indent
+
+" Auto Complete
+Bundle 'Valloric/YouCompleteMe'
+
+" color schemes
+Plugin 'jnurmine/Zenburn'
+Plugin 'altercation/vim-colors-solarized'
+
+" syntax check / highliht
+"Plugin 'scrooloose/syntastic' "HIGHLE PROBLEMATIC
+Plugin 'nvie/vim-flake8'
+
+"file browsing
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+
+" git integration
+Plugin 'tpope/vim-fugitive'
+
+" powerline
+"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" Use UTF 8
+set encoding=utf-8
+
+" Code Collapese
+"
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Enable folding with the spacebar
+nnoremap <space> za
+set foldmethod=indent
+
+" manage indents
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix 
+
+" Highlight extra whitesapce
+highlight BadWhitespace ctermbg=red guibg=red
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" Autocomplete extras
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" colorscheme
+if has('gui_running')
+  set background=dark
+  colorscheme solarized
+endif
+
+" syntax highlight /check
+let python_highlight_all=1
+
+
+" hide pyc files in browser
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+map <C-n> :NERDTreeToggle<CR> 
+
+
+" my rand stuff
+syntax on
+set number
+set backspace=2
+
+if has("autocmd")
+	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+
+
+"python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+
+
+
+
+
